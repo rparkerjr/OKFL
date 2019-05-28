@@ -7,6 +7,8 @@ My primary goals for this project were:
 3. get comfortable with plotting using matplotlib/pyplot and seaborn
 4. find some useful insights about my fantasy football league!
 
+Im sure there are already dozens of other scripts or analyses in this space, but this is meant as a learning tool for me.
+
 ## Data Source
 Our league, OKFL, is hosted on the MyFantasyLeague website (http://home.myfantasyleague.com/). For this project I decided to stick with player data obtainable from MFL. The data does not reveal actual player performance (rushing yards, touchdowns, etc.) but rather it shows player scores by week based upon the scoring rules we have set up. 
 
