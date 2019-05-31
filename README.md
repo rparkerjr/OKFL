@@ -22,6 +22,7 @@ Aside from the coding goals I listed above, I did want to answer a few specific 
 5.30.19 : Uploaded the initial MFL package which includes the first few functions to clean and parse the raw MFL data. If they work the way they should (ha!) the functions will: 
 1. clean the raw data from MFL,
 2. return the top n players in each position,
-3. flatten the data into a tidy dataset.
+3. return the top n players on each team,
+4. flatten the data into a tidy dataset.
 
 Im working on the function for returning top n players by team as well. Then I can move on to more of the analytics.
