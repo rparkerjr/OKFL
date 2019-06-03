@@ -19,9 +19,9 @@ Aside from the coding goals I listed above, I did want to answer a few specific 
 3. Are there discernible tiers of players? Does it make sense to focus on players within a tier vs. specific players?
 
 ## Update Log
-###6.3.19 : Cleaned up existing code, added ReturnTopN function.
+### 6.3.19 : Cleaned up existing code, added ReturnTopN function.
 
-###5.30.19 : Uploaded the initial MFL package which includes the first few functions to clean and parse the raw MFL data. If they work the way they should (ha!) the functions will: 
+### 5.30.19 : Uploaded the initial MFL package which includes the first few functions to clean and parse the raw MFL data. If they work the way they should (ha!) the functions will: 
 1. clean the raw data from MFL,
 2. return the top n players in each position,
 3. return the top n players on each team,
