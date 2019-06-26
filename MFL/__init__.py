@@ -1,9 +1,37 @@
+"""
+MFL
+Functions to clean, parse, and segment raw fantasy football player data from MyFantasyLeague.
+"""
+
+__author__ = "Richard Parker"
+__version__ = "0.5.1"
+__license__ = "MIT"
+
 # Import dependencies
 import numpy as np
 import pandas as pd
 
-def PrepMFL(filename, year):
-    """Clean and parse data from MFL website for use in later analysis. Returns two CSV files.
+def Flatten(data):
+    """Creates a flat, tidy dataset by pivoting the weekly scores into just two columns, week and points.
+    
+    Parameters
+    ----------
+    data : pandas.DataFrame
+    
+    Output
+    ------
+    pandas.DataFrame : tidy dataset; each record represents a player.season.week
+        
+    """
+    
+    data  = data[['player_id', 'name', 'team', 'position', 'season',
+                  '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17']]
+    data = data.melt(['player_id', 'name', 'team', 'position', 'season'], var_name = 'week', value_name = 'points')
+    
+    return data
+
+def Prep(filename, year):
+    """Clean and parse data from MFL website for use in later analysis. Data is returned in similar dimensions.
     
     Parameters
     ----------
@@ -14,7 +42,7 @@ def PrepMFL(filename, year):
         
     Output
     ------
-    pd.DataFrame : cleaned and parsed MFL data in a wide dataframe; one record per player
+    pandas.DataFrame : cleaned and parsed MFL data in a wide dataframe; one record per player
     """
     
     # Check for existence first, prevent errors?
@@ -69,9 +97,6 @@ def PrepMFL(filename, year):
     df2.sort_values('total_points', ascending = False, inplace = True)
     df2.insert(0, 'player_id', df2.index + 1)
     
-    # Export resulting files
-    #df2.to_csv('Cleaned OKFL Player Data - ' + year + '.csv')
-    #print('Exported player data.')
     return df2
     
 def ReturnTop(data, QB = 20, RB = 50, WR = 50, TE = 20, PK = 20):
@@ -79,14 +104,14 @@ def ReturnTop(data, QB = 20, RB = 50, WR = 50, TE = 20, PK = 20):
     
     Parameters
     ----------
-    data : dataframe
-        pandas.DataFrame holding cleaned MFL data; use ParseMFL() first
+    data : pandas.DataFrame
+        cleaned MFL data; use Prep() first
     QB, RB, WR, TE, PK : integer
         top n players by position to select
     
     Output
     ------
-    pd.DataFrame : filtered version of input
+    pandas.DataFrame : filtered version of input
     """
 
     #data = pd.read_csv(data)
@@ -101,36 +126,35 @@ def ReturnTop(data, QB = 20, RB = 50, WR = 50, TE = 20, PK = 20):
     top_data = pd.DataFrame()
     for p in top_n:
         top_data = pd.concat([top_data, data[data.position == p][0:top_n[p]]])
-        #top_data = data[data.position == p][0:top_n[p]]
     
     return top_data
 
-def FlattenMFL(data):
-    """Creates a flat, tidy dataset by pivoting the weekly scores into just two columns, week and points.
+def ReturnTopN(data, n):
+    """Returns the top n players for each offensive position. This calls ReturnTop() using n for each position value.
     
     Parameters
     ----------
-    data : dataframe
+    data : pandas.DataFrame
+        cleaned MFL data; use Prep() first
+    n : integer
+        number of top players to select from each position (QB, RB, WR, TE, PK)
     
     Output
     ------
-    pd.DataFrame : tidy dataset; each record represents a player.season.week
-        
+    pandas.DataFrame : filtered version of input
     """
     
-    data  = data[['player_id', 'name', 'team', 'position', 'season',
-                  '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17']]
-    data = data.melt(['player_id', 'name', 'team', 'position', 'season'], var_name = 'week', value_name = 'points')
+    top_data = ReturnTop(data, QB = n, RB = n, WR = n, TE = n, PK = n)
     
-    return data
+    return top_data
 
 def ReturnTopTeam(data, n = 10):
     """Subsets full player listing by top n teams and returns a new dataframe.
     
     Parameters
     ----------
-    data : dataframe
-        pandas.DataFrame holding cleaned MFL data; use ParseMFL() first
+    data : pandas.DataFrame
+        cleaned MFL data; use Prep() first
     n : integer
         top n teams players per team to select
     
@@ -139,17 +163,11 @@ def ReturnTopTeam(data, n = 10):
     pd.DataFrame : filtered version of input
     """
     
-    #teams = data.team.unique()
-    #print(teams)
-    #teams = teams.sort_values()
+    teams = data.team.unique()
+    top_data = pd.DataFrame()
     
     for t in teams:
-        top = pd.concat([top, data[data.team == t][0:n]])
+        top_data = pd.concat([top_data, data[data.team == t][0:n]])
         #top_data = data[data.position == p][0:top_n[p]]
     
     return top_data
-
-print('MFL 0.5 package imported:\n')
-print('  ParseMFL(filename, year)\n')
-print('  ReturnTop(data, QB, RB, WR, TE, PK)\n')
-print('  FlattenMFL(data)\n')
