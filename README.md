@@ -12,6 +12,11 @@ Im sure there are already dozens of other scripts or analyses in this space, but
 ## Data Source
 Our league, OKFL, is hosted on the MyFantasyLeague website (http://home.myfantasyleague.com/). For this project I decided to stick with player data obtainable from MFL. The data does not reveal actual player performance (rushing yards, touchdowns, etc.) but rather it shows player scores by week based upon the scoring rules we have set up. 
 
+These files are what I downloaded from the MFL website. The initial cleanup using PrepMFL() works on these files.
+- OKFL Top 500 Offense 2016.csv
+- OKFL Top 500 Offense 2017.csv
+- OKFL Top 500 Offense 2018.csv
+
 ## Questions to Answer
 Aside from the coding goals I listed above, I did want to answer a few specific questions about the data:
 1. Are certain NFL teams better sources of players? IE, do certain teams regularly have high-scoring players while others are dogs?
@@ -19,8 +24,8 @@ Aside from the coding goals I listed above, I did want to answer a few specific 
 3. Are there discernible tiers of players? Does it make sense to focus on players within a tier vs. specific players?
 
 ## Update Log
+### 6.26.19 : Renamed functions, minor cleanup of documentation. 
 ### 6.3.19 : Cleaned up existing code, added ReturnTopN function.
-
 ### 5.30.19 : Uploaded the initial MFL package which includes the first few functions to clean and parse the raw MFL data. If they work the way they should (ha!) the functions will: 
 1. clean the raw data from MFL,
 2. return the top n players in each position,
