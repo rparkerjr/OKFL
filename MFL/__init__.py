@@ -5,7 +5,7 @@ Functions to clean, parse, and segment raw fantasy football player data from MyF
 
 __author__ = "Richard Parker"
 __version__ = "0.5.1"
-__license__ = "MIT"
+__license__ = "GNU3.0"
 
 # Import dependencies
 import numpy as np
