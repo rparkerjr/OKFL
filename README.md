@@ -24,6 +24,8 @@ Aside from the coding goals I listed above, I did want to answer a few specific 
 3. Are there discernible tiers of players? Does it make sense to focus on players within a tier vs. specific players?
 
 ## Update Log
+### 7.7.19 : Added Workflow markdown file.
+Might be extraneous, but it outlines basically getting the raw data, using a couple of tools in the MFL package to tidy things up, and mentioning further follow up in other tools (Tableau, etc).
 ### 6.26.19 : Renamed functions, minor cleanup of documentation. 
 ### 6.3.19 : Cleaned up existing code, added ReturnTopN function.
 ### 5.30.19 : Uploaded the initial MFL package which includes the first few functions to clean and parse the raw MFL data. If they work the way they should (ha!) the functions will: 
