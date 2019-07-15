@@ -4,7 +4,7 @@ Functions to clean, parse, and segment raw fantasy football player data from MyF
 """
 
 __author__ = "Richard Parker"
-__version__ = "0.5.1"
+__version__ = "0.5.2"
 __license__ = "GNU3.0"
 
 # Import dependencies
@@ -29,6 +29,31 @@ def Flatten(data):
     data = data.melt(['player_id', 'name', 'team', 'position', 'season'], var_name = 'week', value_name = 'points')
     
     return data
+
+def GetPlayers(season = '2019'):
+    """Pulls updated listing of players from the MFL server.
+
+    Parameters
+    ----------
+    season : which year do you want player information for
+
+    Output
+    ------
+    pandas.DataFrame : all players for the requested season including id, name, position, team
+    """
+    
+    details = '0'
+    #since = 
+    #players = 
+    json = '1'
+    
+    url = 'http://www71.myfantasyleague.com/' + season + '/export?TYPE=players&DETAILS=' + details + '&SINCE=&PLAYERS=&JSON=' + json
+    
+    data = pd.read_json(url)
+    p = data.players.player
+    players = pd.DataFrame.from_dict(p, orient = 'columns')
+    
+    return players
 
 def Prep(filename, year):
     """Clean and parse data from MFL website for use in later analysis. Data is returned in similar dimensions.
