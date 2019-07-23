@@ -52,6 +52,7 @@ def GetPlayers(season = '2019'):
     data = pd.read_json(url)
     p = data.players.player
     players = pd.DataFrame.from_dict(p, orient = 'columns')
+    players.rename(columns = {'id' : 'player_id'})
     
     return players
 
