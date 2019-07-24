@@ -4,7 +4,7 @@ Functions to clean, parse, and segment raw fantasy football player data from MyF
 """
 
 __author__ = "Richard Parker"
-__version__ = "0.5.2"
+__version__ = "0.5.3"
 __license__ = "GNU3.0"
 
 # Import dependencies
