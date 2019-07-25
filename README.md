@@ -2,10 +2,10 @@
 My workflow for cleaning fantasy football player data from MyFantasyLeague for the OKFL
 ---
 My primary goals for this project were:
-1. work on parsing and cleaning data
-2. become more proficient with how to subset dataframes
-3. get comfortable with plotting using matplotlib/pyplot and seaborn
-4. find some useful insights about my fantasy football league!
+1. work on parsing and cleaning data - DONE!
+2. become more proficient with how to subset dataframes - DONE!
+3. get comfortable with plotting using matplotlib/pyplot and seaborn - DONE!
+4. find some useful insights about my fantasy football league! - DONE!
 
 Im sure there are already dozens of other scripts or analyses in this space, but this is meant as a learning tool for me.
 
@@ -20,11 +20,15 @@ These files are what I downloaded from the MFL website. The initial cleanup usin
 ## Questions to Answer
 Aside from the coding goals I listed above, I did want to answer a few specific questions about the data:
 1. Are certain NFL teams better sources of players? IE, do certain teams regularly have high-scoring players while others are dogs?
+<i>Generally speaking, yes.</i>
 2. How do the individual positions stack up against each other when it comes to player scores? 
 <i>So it turns out that there are some interesting differences in the positions, at least based on our scoring system. QBs score the most week to week and have higher highs than the other positions. RBs are right behind them, with a few key players standing above the rest. But the bulk of the RB field is on par with WRs. TEs and PKs are similar when it comes to points scored, but PKs are more reliable and have a higher median; TEs skew lower.</i>
 3. Are there discernible tiers of players? Does it make sense to focus on players within a tier vs. specific players?
+<i>Cursory examination of the visualizations leads me to say yes. I want to use it as an experiment for practicing clustering and other machine learning skills.</i>
 
 ## Update Log
+### 7.24.19 : Added new Jupyter Notebook, initial goals completed!
+I added a new notebook for my script that pulls data from the MFL website via API, cleans and blends it, then spits it back out as a flat file for Tableau. The dashboard is available [here](https://public.tableau.com/views/OKFLOwnerDashboard2018/Story1?:embed=y&:display_count=yes&publish=yes&:origin=viz_share_link). There are more pieces of the API that I need to add into the MFL package, and I will probably rework the entire thing to be based off of the API calls rather than my primitive copypasta :D
 ### 7.15.19 : Added GetPlayers function
 I found the help page for the MFL API and started tinkering with it. The first function I built was to get a listing of players with their player IDs. Next will be pulling the similar data I had been manually scraping...
 ### 7.7.19 : Added Workflow markdown file.
