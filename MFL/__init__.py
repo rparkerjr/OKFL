@@ -4,12 +4,43 @@ Functions to clean, parse, and segment raw fantasy football player data from MyF
 """
 
 __author__ = "Richard Parker"
-__version__ = "0.5.3"
+__version__ = "0.5.4"
 __license__ = "GNU3.0"
 
 # Import dependencies
 import numpy as np
 import pandas as pd
+
+def DraftResults(league_id = '27378', season = '2018'):
+    """Pulls draft results from the MFL server.
+
+    Parameters
+    ----------
+    league_id : string
+        league to pull draft results for
+    season : string
+        which year do you want player information for
+
+    Output
+    ------
+    pandas.DataFrame : all draft picks for the requested season including round, pick, owner_id, player_id
+    """
+    
+    json = '1'
+    url = ('http://www71.myfantasyleague.com/' 
+           + str(season) + '/export?TYPE=draftResults&L=' 
+           + str(league_id) + '&APIKEY=&JSON=' + json)
+    
+    data = pd.read_json(url)
+    data = data['draftResults']['draftUnit']['draftPick']
+
+    draft = pd.DataFrame.from_dict(data, orient = 'columns')
+    draft.rename(columns = {'franchise' : 'drafted_by', 'player' : 'player_id'}, inplace = True)
+    draft.drop(columns = ['comments', 'timestamp'], inplace = True)
+    draft_key = (draft['round'] + draft['pick'])
+    draft.set_index(draft_key, inplace = True)
+    
+    return draft
 
 def Flatten(data):
     """Creates a flat, tidy dataset by pivoting the weekly scores into just two columns, week and points.
