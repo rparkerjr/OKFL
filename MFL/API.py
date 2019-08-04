@@ -2,6 +2,12 @@
 MFL-API
 Functions to access data from MyFantasyLeague using their API. Not all API calls implemented,
 only those needed most for draft analysis and powering the OKFL dashboard.
+
+ - ByeWeeks
+ - DraftResults
+ - GetPlayers
+ - PlayerScores
+ - WeeklyResults
 """
 
 __author__ = "Richard Parker"
@@ -11,6 +17,28 @@ __license__ = "GNU3.0"
 # Import dependencies
 import numpy as np
 import pandas as pd
+
+def ByeWeeks(season = '2018', week = ''):
+    """Pulls draft results from the MFL server.
+
+    Parameters
+    ----------
+    season : which year do you want player information for
+    week : will return the team(s) on bye that week; if left blank returns all weeks
+
+    Output
+    ------
+    pandas.DataFrame : all teams and their bye weeks
+    """
+    json = '1'
+    url = ('http://www71.myfantasyleague.com/'
+           + season + 'export?TYPE=nflByeWeeks&W='
+           + str(week) + '&JSON=' + json)
+
+    data = pd.read_json(url)
+    bye_weeks = pd.DataFrame.from_dict(data['nflByeWeeks'][0], orient = 'columns')
+
+    return bye_weeks
 
 def DraftResults(league_id = '27378', season = '2018'):
     """Pulls draft results from the MFL server.
@@ -27,7 +55,7 @@ def DraftResults(league_id = '27378', season = '2018'):
     
     json = '1'
     url = ('http://www71.myfantasyleague.com/' 
-           + season + '/export?TYPE=draftResults&L=' 
+           + season + '/export?TYPE=draftResults&L='
            + league_id + '&APIKEY=&JSON=' + json)
     
     data = pd.read_json(url)
@@ -113,6 +141,45 @@ def PlayerScores(league_id = '27378', season = '2018'):
 
     return scores
 
+def Projections(league_id = '27378', season = '2018'):
+    """Pulls weekly points projections from the MFL server.
+
+    Parameters
+    ----------
+    league_id : league to pull projections for
+    season : which season
+    # week : week to pull, blank for upcoming week
+
+    Output
+    ------
+    pandas.DataFrame : all weekly matchup data including starters/non-starters, should-have-started, etc.
+    """
+
+    weeks = list(range(1, 18))
+    json = '1'
+    projections = pd.DataFrame(columns = ['season', 'week', 'player_id', 'proj_points'])
+
+    for w in weeks:
+        #p = pd.DataFrame(columns = ['season', 'week', 'player_id', 'proj_points'])
+        url = ('http://www71.myfantasyleague.com/'
+               + season + '/export?TYPE=projectedScores&L='
+               + league_id + '&APIKEY=&W='
+               + str(w) + '&PLAYERS=&POSITION=&STATUS=&COUNT=&JSON=' + json)
+
+        data = pd.read_json(url)
+        data = data['projectedScores']['playerScore']
+        
+        p = pd.DataFrame.from_dict(data)
+        p.rename(columns = {'id' : 'player_id', 'score' : 'proj_points'}, inplace = True)
+        p['season'] = season
+        p['week'] = w
+        p = p[['season', 'week', 'player_id', 'proj_points']]
+
+        projections = pd.concat([projections, p])
+    
+    projections = projections.astype({'week': 'int64'}, inplace = True)  
+    return projections
+
 def WeeklyResults(league_id = '27378', season = '2018'):
     """Pulls weekly matchup results from the MFL server.
 
@@ -128,7 +195,7 @@ def WeeklyResults(league_id = '27378', season = '2018'):
 
     weeks = list(range(1, 18))
     json = '1'
-    results = pd.DataFrame()
+    results = pd.DataFrame() #pd.DataFrame(columns = ['season', 'week', 'player_id', 'proj_points'])
 
     # iterate through weeks
     for w in weeks:
