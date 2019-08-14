@@ -27,12 +27,14 @@ Aside from the coding goals I listed above, I did want to answer a few specific 
 <i>Cursory examination of the visualizations leads me to say yes. I want to use it as an experiment for practicing clustering and other machine learning skills.</i>
 
 ## Update Log
+### 8.14.19 : Repo admin and cleanup
+Deprecating the old workflow, working on replacing it with new flow pushing cleaned data to Tableau.
 ### 8.4.19 : Broke package up into separate files
 So maybe Im getting too fancy, but I separated code into two files in the package. One is for the code dealing specifically with the API calls. The other contains the original utility functions I used to clean and manipulate the old scraped data. The plan is to get all the important API stuff built out and retool the utilities to work on the API data instead. I also added the functions to get PlayerScores() and WeeklyResults().
 
 Im moving towards having the OKFL dashboard be a separate project that I can share with the rest of the league. As such, I want to get it tidied up and an update process in place before the season starts.
 ### 7.24.19 : Added new Jupyter Notebook, initial goals completed!
-I added a new notebook for my script that pulls data from the MFL website via API, cleans and blends it, then spits it back out as a flat file for Tableau. The dashboard is available [here](https://public.tableau.com/views/OKFLOwnerDashboard2018/Story1?:embed=y&:display_count=yes&publish=yes&:origin=viz_share_link). There are more pieces of the API that I need to add into the MFL package, and I will probably rework the entire thing to be based off of the API calls rather than my primitive copypasta :D
+I added a new notebook for my script that pulls data from the MFL website via API, cleans and blends it, then spits it back out as a flat file for Tableau. The dashboard is available [here](https://public.tableau.com/views/2018PostSeason/2018Overview?:embed=y&:display_count=yes&:origin=viz_share_link). There are more pieces of the API that I need to add into the MFL package, and I will probably rework the entire thing to be based off of the API calls rather than my primitive copypasta :D
 ### 7.15.19 : Added GetPlayers function
 I found the help page for the MFL API and started tinkering with it. The first function I built was to get a listing of players with their player IDs. Next will be pulling the similar data I had been manually scraping...
 ### 7.7.19 : Added Workflow markdown file.
