@@ -1,0 +1,22 @@
+# OKFL data
+My workflow for cleaning fantasy football player data from MyFantasyLeague for the OKFL
+---
+My primary goals for this project were:
+1. work on parsing and cleaning data - DONE!
+2. become more proficient with how to subset dataframes - DONE!
+3. get comfortable with plotting using matplotlib/pyplot and seaborn - DONE!
+4. find some useful insights about my fantasy football league! - DONE!
+
+Im sure there are already dozens of other scripts or analyses in this space, but this is meant as a learning tool for me.
+
+## Data Source
+Our league, OKFL, is hosted on the MyFantasyLeague website (http://home.myfantasyleague.com/). For this project I decided to stick with player data obtainable from MFL. The data does not reveal actual player performance (rushing yards, touchdowns, etc.) but rather it shows player scores by week based upon the scoring rules we have set up. (<i>Note: when I first I started working on this I was doing a large copy/paste of data from the MFL website into a spreadsheet program and saving that as a csv. It was very primitive.</i>)
+
+## Questions to Answer
+Aside from the coding goals I listed above, I did want to answer a few specific questions about the data:
+1. Are certain NFL teams better sources of players? IE, do certain teams regularly have high-scoring players while others are dogs?
+<i>Generally speaking, yes.</i>
+2. How do the individual positions stack up against each other when it comes to player scores? 
+<i>So it turns out that there are some interesting differences in the positions, at least based on our scoring system. QBs score the most week to week and have higher highs than the other positions. RBs are right behind them, with a few key players standing above the rest. But the bulk of the RB field is on par with WRs. TEs and PKs are similar when it comes to points scored, but PKs are more reliable and have a higher median; TEs skew lower.</i>
+3. Are there discernible tiers of players? Does it make sense to focus on players within a tier vs. specific players?
+<i>Cursory examination of the visualizations leads me to say yes. I want to use it as an experiment for practicing clustering and other machine learning skills.</i>
