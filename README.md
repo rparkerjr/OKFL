@@ -1,34 +1,19 @@
-# OKFL
-My workflow for cleaning fantasy football player data from MyFantasyLeague for the OKFL
----
-My primary goals for this project were:
-1. work on parsing and cleaning data - DONE!
-2. become more proficient with how to subset dataframes - DONE!
-3. get comfortable with plotting using matplotlib/pyplot and seaborn - DONE!
-4. find some useful insights about my fantasy football league! - DONE!
+# OKFL Fantasy Football Fun
+This repo contains the MFL package and other documentation to support my fantasy football Tableau dashboard. The workflow is saved in a Jupyter notebook (<i>OKFL 2018 Post Season Dashboard.ipynb</i>) which relies on the MFL package as well as a couple of other basic Python libraries. The initial workflow focuses on one season, 2018, but long term goals are to:
+- pull and combine data for multiple seasons,
+- create a standalone 2019 dashboard modeled on this, updated weekly as the season goes on,
+- create separate statistical player analysis workflow in Python, leveraging more Seaborn visualizations and eventually moving some to Tableau or PowerBI.
 
-Im sure there are already dozens of other scripts or analyses in this space, but this is meant as a learning tool for me.
-
-## Data Source
-Our league, OKFL, is hosted on the MyFantasyLeague website (http://home.myfantasyleague.com/). For this project I decided to stick with player data obtainable from MFL. The data does not reveal actual player performance (rushing yards, touchdowns, etc.) but rather it shows player scores by week based upon the scoring rules we have set up. 
-
-These files are what I downloaded from the MFL website. The initial cleanup using PrepMFL() works on these files.
-- OKFL Top 500 Offense 2016.csv
-- OKFL Top 500 Offense 2017.csv
-- OKFL Top 500 Offense 2018.csv
-
-## Questions to Answer
-Aside from the coding goals I listed above, I did want to answer a few specific questions about the data:
-1. Are certain NFL teams better sources of players? IE, do certain teams regularly have high-scoring players while others are dogs?
-<i>Generally speaking, yes.</i>
-2. How do the individual positions stack up against each other when it comes to player scores? 
-<i>So it turns out that there are some interesting differences in the positions, at least based on our scoring system. QBs score the most week to week and have higher highs than the other positions. RBs are right behind them, with a few key players standing above the rest. But the bulk of the RB field is on par with WRs. TEs and PKs are similar when it comes to points scored, but PKs are more reliable and have a higher median; TEs skew lower.</i>
-3. Are there discernible tiers of players? Does it make sense to focus on players within a tier vs. specific players?
-<i>Cursory examination of the visualizations leads me to say yes. I want to use it as an experiment for practicing clustering and other machine learning skills.</i>
+## Workflow Outline
+1. Init routines - import libraries, create any manual lists
+2. ETL - use API functions to pull multiple sets of data from the MyFantasyaLeague website, clean and combine this data into new tables
+3. Export - export 4 new flat files for use by the Tableau dashboard
 
 ## Update Log
 ### 8.14.19 : Repo admin and cleanup
 Deprecating the old workflow, working on replacing it with new flow pushing cleaned data to Tableau.
+- <i>Original Project Goals</i>
+- <i>OKFL 2018 Post Season Dashboard.ipynb</i>
 ### 8.4.19 : Broke package up into separate files
 So maybe Im getting too fancy, but I separated code into two files in the package. One is for the code dealing specifically with the API calls. The other contains the original utility functions I used to clean and manipulate the old scraped data. The plan is to get all the important API stuff built out and retool the utilities to work on the API data instead. I also added the functions to get PlayerScores() and WeeklyResults().
 
