@@ -95,15 +95,13 @@ def GetPlayers(season = '2019'):
     
     return players
 
-def PlayerScores(league_id = '27378', season = '2018'):
+def PlayerScores(league_id = '27378', season = '2019'):
     """Pulls weekly player scores from the MFL server. The API only pulls 1 week at a time so this script loops
     through all weeks.
-
     Parameters
     ----------
     league_id : league to pull matchup results for
     season : which season
-
     Output
     ------
     pandas.DataFrame : all weekly player scores
@@ -111,6 +109,8 @@ def PlayerScores(league_id = '27378', season = '2018'):
 
     weeks = list(range(1, 18))
     json = '1'
+    
+    scores = pd.DataFrame(columns = ['isAvailable', 'score', 'id', 'week'])
 
     for w in weeks:
         url = ('http://www71.myfantasyleague.com/'
@@ -125,19 +125,18 @@ def PlayerScores(league_id = '27378', season = '2018'):
                + str(json))
         
         data = pd.read_json(url)
-        if w == 1:
-            scores = data.playerScores.playerScore
-            scores = pd.DataFrame.from_dict(scores, orient = 'columns')
-            scores['week'] = w
-        else:
-            s = data.playerScores.playerScore
-            s = pd.DataFrame.from_dict(s, orient = 'columns')
-            s['week'] = w
-            scores = pd.concat([scores, s])
+        try:
+            s = pd.DataFrame.from_dict(data.playerScores.playerScore, orient = 'columns')
+        except ValueError:
+            continue
+        s['week'] = w
+        scores = pd.concat([scores, s])
+
     scores['season'] = season
     scores.drop(columns = 'isAvailable', inplace = True)
     scores.rename(columns = {'id' : 'player_id', 'score' : 'points'}, inplace = True)
     scores['player_id'] = scores['player_id'].astype('str')
+    scores = scores[['season', 'week', 'player_id', 'points']]
 
     return scores
 
